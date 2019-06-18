@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views
+from . import views, static
 from .models import Cocktail
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth.views import (
     LoginView,
     PasswordResetView,
@@ -25,4 +27,4 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('<int:cocktail_id>/save/', views.save, name='save'),
     path('<int:cocktail_id>/delete/', views.delete, name='delete'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
