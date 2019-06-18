@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  {% block head %}
+  <title>Barapp</title>
+  {% endblock %}
+</head>
+<body>
+  {% block body %}
+  <div class="container">
+    <h1 class="display-2">Cocktails</h1>
+    <div id="search">
+      <input type="text" placeholder=" search cocktail" id="filter-search">
+    </div>
+    <a href="{% url 'barapp:cocktail_form' %}">Create a cocktail</a>
+  </div>
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class='nav-item'>
+
+          All Cocktails
+
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+        {% if latest_cocktails %}
+        {% for cocktail in latest_cocktails %}
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 recipe" id="{{ cocktail.cocktail_name }}">
+          <a href="{% url 'barapp:detail' cocktail.id %}">
+            <div class="card">
+              <img src="{{ cocktail.cocktail_image.url }}" class="card-img-top"
+              height="185" width="278"
+              <div class="card-body">
+                <a href="{% url 'barapp:detail' cocktail.id %}">
+                  <h5 class="card-title text-center">{{ cocktail.cocktail_name }}</h5>
+                </a>
+                <p class="card-text text-center">{{ cocktail.cocktail_info }}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+        {% else %}
+          <p>No cocktails!</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+
+  {% block javascript %}
+  {% endblock %}
+</body>
+</html>
