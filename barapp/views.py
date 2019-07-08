@@ -1,3 +1,4 @@
+import json
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.views import generic, View
 from .models import Cocktail, User
@@ -33,9 +34,27 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return Cocktail.objects.order_by('-pub_date')
 
-class DetailView(generic.DetailView):
-    model = Cocktail
-    template_name = 'barapp/detail.html'
+def detail(request, cocktail_id):
+    cocktail = Cocktail.objects.get(id=cocktail_id)
+    is_favorite = False
+    if cocktail.favorite.filter(id=request.user.id).exists():
+        is_favorite = True
+
+    context = {
+        'cocktail'    : cocktail,
+        'is_favorite' : is_favorite,
+    }
+
+    return render(request, 'barapp/detail.html', context)
+
+def favorite(request, cocktail_id):
+    cocktail = get_object_or_404(Cocktail, id=cocktail_id)
+    if cocktail.favorite.filter(id=request.user.id).exists():
+        cocktail.favorite.remove(request.user)
+    else:
+        cocktail.favorite.add(request.user)
+    return HttpResponseRedirect(cocktail.get_absolute_url())
+
 
 class CreateView(generic.edit.CreateView):
     model = Cocktail

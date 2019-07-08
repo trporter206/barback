@@ -5,13 +5,14 @@ import datetime
 from django.conf import settings
 from django.urls import reverse
 
+
 class User(AbstractUser):
 
     def get_absolute_url(self):
         return reverse("barapp:profile", kwargs={"id": self.id})
 
-
 class Cocktail(models.Model):
+    slug            = models.SlugField(max_length=120, blank=True)
     cocktail_name   = models.CharField(max_length = 50)
     cocktail_image  = models.ImageField(upload_to="cocktail_images/",
                                         blank=True,
@@ -20,9 +21,9 @@ class Cocktail(models.Model):
     cocktail_info   = models.CharField(max_length = 200, blank=True, null=True)
     cocktail_steps  = models.CharField(max_length = 1000, blank=True, null=True)
     virgin          = models.BooleanField(null=True)
-    user            = models.ForeignKey(User, on_delete=models.CASCADE,
-                                              blank=True,
-                                              null=True)
+    favorite        = models.ManyToManyField(User, related_name='favorite', blank=True)
+    user            = models.ForeignKey(User, on_delete= models.CASCADE, blank=True,
+                                                                         null=True)
 
     cocktail_type_choices = (
         ('WHISKEY', 'Whiskey'),
@@ -41,7 +42,7 @@ class Cocktail(models.Model):
         return now - datetime.timedelta(days=2) <= self.pub_date <= now
 
     def get_absolute_url(self):
-        return reverse("barback:detail", kwargs={"id": self.id})
+        return reverse("barapp:detail", kwargs={"cocktail_id": self.id})
 
     @classmethod
     def manhattan(cls):

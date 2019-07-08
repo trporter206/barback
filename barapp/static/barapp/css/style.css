@@ -7,6 +7,10 @@ body {
   width: 100%;
 }
 
+button {
+  color: "black",
+}
+
 .wrapper {
   width: 100%;
   margin: 10px auto;

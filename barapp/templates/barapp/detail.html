@@ -8,15 +8,23 @@
 
 {% block body %}
 <div class="container">
-  <link rel="stylesheet" type="text/css" href="{% static 'barapp/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'barapp/css/style.css' %}">
   <img src="{{ cocktail.cocktail_image.url }}" alt="img" width="240">
   <h1>{{ cocktail.cocktail_name }}</h1>
   <p>{{ cocktail.pub_date }}</p>
   <p>{{ cocktail.user.username }}</p>
-
-  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
   <h3>{{ cocktail.cocktail_type }}</h3>
+  <div id="favorite">
+    {% if is_favorite %}
+    <a href="{% url 'barapp:favorite' cocktail.id %}">
+      <i class="fas fa-heart fa-lg"></i>
+    </a>
+    {% else %}
+    <a href="{% url 'barapp:favorite' cocktail.id %}">
+      <i class="far fa-heart fa-lg"></i>
+    </a>
+    {% endif %}
+  </div>
   <h2>how to create</h2>
   <p>{{ cocktail.cocktail_steps }}</p>
   {% if cocktail.user == request.user %}
@@ -24,4 +32,6 @@
   {% endif %}
 </div>
 
+{% endblock %}
+{% block javascript %}
 {% endblock %}
