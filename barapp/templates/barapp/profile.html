@@ -12,7 +12,7 @@
     <p>{{user.first_name}}</p>
     <p>{{user.last_name}}</p>
     <p>{{user.email}}</p>
-    
+<!-- add tab for faves -->
     <ul class="nav nav-tabs">
       <li class='nav-item'>
         <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all"
@@ -20,12 +20,20 @@
            All Cocktails
         </a>
       </li>
+      <li class='nav-item'>
+        <a class="nav-link" id="fav-tab" data-toggle="tab" href="#fav"
+           role="fav" aria-controls="fav" aria-selected="true">
+           Favorite Cocktails
+        </a>
+      </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+      <div class="tab-pane fade show active" id="all" role="tabpanel"
+           aria-labelledby="all-tab">
         {% if user_cocktails %}
           {% for cocktail in user_cocktails %}
-            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 recipe" id="{{ cocktail.cocktail_name }}">
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 recipe"
+                 id="{{ cocktail.cocktail_name }}">
               <div class="card">
                 <img src="{{ cocktail.cocktail_image.url }}" class="card-img-top"
                      height="185" width="278">
@@ -42,7 +50,31 @@
           <p>You have not created any Cocktails</p>
         {% endif %}
       </div>
+    </div class="tab-content" id="myTabContent">
     <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show" id="fav" role="tabpanel"
+           aria-labelledby="fav-tab">
+        {% if fav_cocktails %}
+          {% for cocktail in fav_cocktails %}
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 recipe"
+                 id="{{ cocktail.cocktail_name }}">
+              <div class="card">
+                <img src="{{ cocktail.cocktail_image.url }}" class="card-img-top"
+                     height="185" width="278">
+                <div class="card-body">
+                  <a href="{% url 'barapp:detail' cocktail.id %}">
+                    <h5 class="card-title text-center">{{ cocktail.cocktail_name }}</h5>
+                  </a>
+                  <p class="card-text text-center">{{ cocktail.cocktail_info }}</p>
+                </div>
+              </div>
+            </div>
+         {% endfor %}
+        {% else %}
+          <p>You have not created any Cocktails</p>
+        {% endif %}
+      </div>
+    </div class="tab-content" id="myTabContent">
   </body>
 </div>
 {% endblock %}

@@ -36,6 +36,7 @@ class IndexView(generic.ListView):
 
 def detail(request, cocktail_id):
     cocktail = Cocktail.objects.get(id=cocktail_id)
+    user = request.user
     is_favorite = False
     if cocktail.favorite.filter(id=request.user.id).exists():
         is_favorite = True
@@ -54,6 +55,10 @@ def favorite(request, cocktail_id):
     else:
         cocktail.favorite.add(request.user)
     return HttpResponseRedirect(cocktail.get_absolute_url())
+
+def favorites_list(request):
+    user = request.user
+    favorite_cocktails = user.favorite.all()
 
 
 class CreateView(generic.edit.CreateView):
@@ -85,12 +90,17 @@ def delete(request, cocktail_id):
 class AboutView(generic.TemplateView):
     template_name = 'barapp/about.html'
 
-class ProfileView(generic.ListView):
-    template_name = 'barapp/profile.html'
-    context_object_name = 'user_cocktails'
+def profile(request):
+    user = request.user
+    user_cocktails = Cocktail.objects.filter(user=user).order_by('-pub_date')
+    fav_cocktails  = Cocktail.objects.filter(favorite=user.id)
 
-    def get_queryset(self):
-        return Cocktail.objects.filter(user = self.request.user).order_by('-pub_date')
+    context = {
+        'user_cocktails' : user_cocktails,
+        'fav_cocktails'  : fav_cocktails,
+    }
+
+    return render(request, 'barapp/profile.html', context)
 
 class RegisterView(generic.edit.CreateView):
     template_name = 'registration/registration_form.html'

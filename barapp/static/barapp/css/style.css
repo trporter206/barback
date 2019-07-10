@@ -32,3 +32,10 @@ button {
   clear: both;
   display: table;
 }
+
+.tab-content {
+  display: none;
+}
+.tab-panel.active {
+  display: block;
+}
