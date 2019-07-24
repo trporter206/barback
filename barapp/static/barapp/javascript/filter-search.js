@@ -1,6 +1,6 @@
 (function() {
   var $cocktails = $('.recipe');
-  var $search    = $('#filter-search');
+  var $search    = $('.filter-search');
   var cache      = [];
 
   $cocktails.each(function() {

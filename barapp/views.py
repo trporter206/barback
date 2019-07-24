@@ -32,7 +32,7 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_cocktails'
 
     def get_queryset(self):
-        return Cocktail.objects.order_by('-pub_date')
+        return Cocktail.objects.all().order_by('-pub_date')
 
 def detail(request, cocktail_id):
     cocktail = Cocktail.objects.get(id=cocktail_id)
@@ -55,11 +55,6 @@ def favorite(request, cocktail_id):
     else:
         cocktail.favorite.add(request.user)
     return HttpResponseRedirect(cocktail.get_absolute_url())
-
-def favorites_list(request):
-    user = request.user
-    favorite_cocktails = user.favorite.all()
-
 
 class CreateView(generic.edit.CreateView):
     model = Cocktail

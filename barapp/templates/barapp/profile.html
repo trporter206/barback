@@ -12,7 +12,9 @@
     <p>{{user.first_name}}</p>
     <p>{{user.last_name}}</p>
     <p>{{user.email}}</p>
-<!-- add tab for faves -->
+    <div class="search">
+      <input type="text" placeholder=" search cocktail" id="filter-search">
+    </div>
     <ul class="nav nav-tabs">
       <li class='nav-item'>
         <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all"
@@ -71,7 +73,7 @@
             </div>
          {% endfor %}
         {% else %}
-          <p>You have not created any Cocktails</p>
+          <p>You have no favorite Cocktails</p>
         {% endif %}
       </div>
     </div class="tab-content" id="myTabContent">

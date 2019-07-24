@@ -33,9 +33,13 @@ button {
   display: table;
 }
 
-.tab-content {
+.tab-pane {
   display: none;
 }
-.tab-panel.active {
+.tab-pane.active {
   display: block;
+}
+
+.search {
+  float: right;
 }
