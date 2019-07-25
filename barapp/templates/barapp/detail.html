@@ -26,7 +26,6 @@
     {% endif %}
   </div>
   <h2>how to create</h2>
-  <p>{{ cocktail.cocktail_steps }}</p>
   {% if cocktail.user == request.user %}
     <a href="{% url 'barapp:delete' cocktail.id  %}">delete</a>
   {% endif %}

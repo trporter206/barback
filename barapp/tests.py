@@ -13,7 +13,6 @@ class CocktailFormTestCase(TestCase):
         cocktail = Cocktail.objects.create(cocktail_name   = "cocktail",
                                            pub_date        = pub_time,
                                            cocktail_info   = "info",
-                                           cocktail_steps  = "steps",
                                            virgin          = False,)
 
     def test_init(self):
@@ -25,7 +24,6 @@ class CocktailFormTestCase(TestCase):
             "cocktail_name" : "cocktail_name",
             "cocktail_type" : "WHISKEY",
             "cocktail_info" : "cocktail_info",
-            "cocktail_steps": "cocktail_steps",
             "virgin"        : False,
         })
         self.assertTrue(form.is_valid())
@@ -33,7 +31,6 @@ class CocktailFormTestCase(TestCase):
         self.assertEqual(cocktail.cocktail_name, "cocktail_name")
         self.assertEqual(cocktail.cocktail_type, "WHISKEY")
         self.assertEqual(cocktail.cocktail_info, "cocktail_info")
-        self.assertEqual(cocktail.cocktail_steps, "cocktail_steps")
         self.assertEqual(cocktail.virgin, False)
 
     def test_blank_data(self):
@@ -46,13 +43,11 @@ class CocktailTestCase(TestCase):
         Cocktail.objects.create(cocktail_name   ="cocktail",
                                 pub_date        = pub_time,
                                 cocktail_info   ="info",
-                                cocktail_steps  ="steps",
                                 cocktail_type   ="Whiskey",
                                 virgin          = False,)
         Cocktail.objects.create(cocktail_name   ="virgin_cocktail",
                                 pub_date        = pub_time,
                                 cocktail_info   ="info",
-                                cocktail_steps  ="steps",
                                 cocktail_type   ="Vodka",
                                 virgin          = True,)
 
@@ -75,7 +70,6 @@ class CocktailTestCase(TestCase):
         cocktail = Cocktail.objects.get(cocktail_name="cocktail")
         self.assertTrue(isinstance(cocktail.cocktail_name, str))
         self.assertTrue(isinstance(cocktail.cocktail_info, str))
-        self.assertTrue(isinstance(cocktail.cocktail_steps, str))
 
     def test_manhattan(self):
         manhattan = Cocktail.manhattan()

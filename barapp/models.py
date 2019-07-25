@@ -19,7 +19,6 @@ class Cocktail(models.Model):
                                         null=True)
     pub_date        = models.DateTimeField(auto_now=True)
     cocktail_info   = models.CharField(max_length = 200, blank=True, null=True)
-    cocktail_steps  = models.CharField(max_length = 1000, blank=True, null=True)
     virgin          = models.BooleanField(null=True)
     favorite        = models.ManyToManyField(User, related_name='favorite', blank=True)
     user            = models.ForeignKey(User, on_delete= models.CASCADE, blank=True,
@@ -48,7 +47,6 @@ class Cocktail(models.Model):
     def manhattan(cls):
         manhattan = cls.objects.create(cocktail_name  = "manhattan",
                                        cocktail_info  = "a classic drink",
-                                       cocktail_steps = "shake it in a shaker",
                                        cocktail_type  = "Whiskey",
                                        virgin         =  False,)
         return manhattan
@@ -57,7 +55,6 @@ class Cocktail(models.Model):
     def martini(cls):
         martini = cls.objects.create(cocktail_name  = "martini",
                                        cocktail_info  = "youve seen bond",
-                                       cocktail_steps = "shaken, not stirred",
                                        cocktail_type  = "Vodka",
                                        virgin         =  False,)
         return martini
@@ -70,3 +67,29 @@ class Cocktail(models.Model):
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
     was_published_recently.short_description = 'Published recently?'
+
+class CocktailSteps(models.Model):
+    step     = models.CharField(max_length = 100)
+    cocktail = models.ForeignKey(Cocktail, on_delete= models.CASCADE, blank=True,
+                                                                      null=True)
+
+class CocktailIngredients(models.Model):
+    ingredient = models.CharField(max_length = 50)
+    quantity   = models.IntegerField(null = True)
+
+    ingredient_units = (
+        ('PART', 'part'),
+        ('OZ', 'oz'),
+        ('FL OZ', 'fl oz'),
+        ('ML', 'ml'),
+        ('PINCH', 'pinch'),
+        ('WEDGE', 'wedge'),
+        ('DROP', 'drop'),
+        ('SPLASH', 'splash'),
+        ('TBSP', 'tbsp'),
+        ('TSP', 'tsp'),
+    )
+
+    unit       = models.CharField(max_length = 10, choices = ingredient_units)
+    cocktail   = models.ForeignKey(Cocktail, on_delete= models.CASCADE, blank=True,
+                                                                        null=True)

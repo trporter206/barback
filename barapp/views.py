@@ -62,7 +62,6 @@ class CreateView(generic.edit.CreateView):
               'cocktail_type',
               'cocktail_image',
               'cocktail_info',
-              'cocktail_steps',
               'virgin',
               ]
 
