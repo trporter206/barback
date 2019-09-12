@@ -43,3 +43,21 @@ button {
 .search {
   float: right;
 }
+
+.cabinet {
+  float: right;
+  width: 50%;
+}
+
+.matching {
+  float: left;
+  width: 50%;
+}
+
+.cabinetlist {
+  display: inline;
+}
+
+.cabinetform {
+  float: left;
+}

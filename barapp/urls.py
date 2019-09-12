@@ -29,4 +29,6 @@ urlpatterns = [
     path('<int:cocktail_id>/save/', views.save, name='save'),
     path('<int:cocktail_id>/delete/', views.delete, name='delete'),
     path('<int:cocktail_id>/favorite/', views.favorite, name='favorite'),
+    path('cabinet/', views.CabinetView.as_view(), name='cabinet'),
+    path('ajax/add_to_cabinet/', views.add_to_cabinet, name='add_to_cabinet'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

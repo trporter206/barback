@@ -7,6 +7,7 @@ from django.urls import reverse
 
 
 class User(AbstractUser):
+    bartender = models.BooleanField(null=True)
 
     def get_absolute_url(self):
         return reverse("barapp:profile", kwargs={"id": self.id})

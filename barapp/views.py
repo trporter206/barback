@@ -112,3 +112,26 @@ def validate_username(request):
 def logout_view(request):
     logout(request)
     return redirect('barapp:index')
+
+class CabinetView(generic.TemplateView):
+    template_name = 'barapp/cabinet.html'
+
+def getCocktails(cabinet, cocktails): # O(c*i)
+    available = []
+    for cocktail in cocktails:
+        ingredients = []
+        for i in cocktail.ingredients:
+            ingredients.append(i.name)
+        if len(set(ingredients) - set(cabinet)) <= 0:
+            available.append(cocktail.name)
+    if len(available) is 0:
+        return 'No cocktails'
+    return available
+
+def add_to_cabinet(request):
+    cabinet = request.GET.get('cabinet', None)
+    cocktails = Cocktail.objects.all()
+    data = {
+        'cocktails' : getCocktails(cabinet, cocktails)
+    }
+    return JsonResponse(data)

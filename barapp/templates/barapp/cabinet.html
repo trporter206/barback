@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+  <title>Cabinet</title>
+{% endblock %}
+{% block body %}
+<body>
+    <div class = 'header'>
+      <h1>Your Cabinet</h1>
+      <p>Find out what you can make with your cabinet</p>
+    </div>
+    <div class="matching cabinetlist">
+      <h3>Available Cocktails</h3>
+      <ul id='cocktails'>
+        <!-- add list items via javascript -->
+      </ul>
+    </div>
+    <div class="cabinetform">
+      <h3>Cabinet</h3>
+      <form onsubmit="return false">
+        {% csrf_token %}
+        <p>ingredient:
+          <input id='search' type="text"/>
+        </p>
+        <input type="submit" id='getCocktails' onclick='searchCocktails()'
+               value="Search Cocktails"></input>
+        <input type="submit" id='cabinetInput' onclick='cabinetAdd()'
+               value="Add to Cabinet"></input>
+      </form>
+    </div>
+    <div class="cabinet cabinetlist">
+      <ul id='cabinet'>
+        <!-- add from form input -->
+      </ul>
+    </div>
+  </body>
+{% endblock %}
