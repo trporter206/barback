@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'barapp.herokuapp.com',
+    'limitless-dawn-83879.herokuapp.com',
 ]
 
 
